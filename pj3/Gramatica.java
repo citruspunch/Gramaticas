@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Gramatica{
 	private char[] simbolosNoTerminales;
@@ -38,27 +39,26 @@ public class Gramatica{
 				reglasDeProduccion[row][col] = reglas[col]; // Se guarda la transicion en la matriz
 			}
 		}
+		reglasDeProduccion = factorizar(reglasDeProduccion);
 	}
 
 	private String[][] factorizar(String[][] reglasDeProduccion){
-		int rows = reglasDeProduccion.length;
-		for (int row = 0; row <= rows; row++) {
-			String[] reglas = reglasDeProduccion[row];
-			String[] reglas2 = reglasDeProduccion[row + 1];
-			if (reglas[0].equals(reglas2[0])){
-				// Se factoriza
-				String[] reglasNuevas = new String[2];
-				reglasNuevas[0] = reglas[0];
-				reglasNuevas[1] = reglas[1] + "|" + reglas2[1];
-				reglasDeProduccion[row] = reglasNuevas;
-				// Se elimina la regla repetida
-				for (int i = row + 1; i < rows; i++) {
-					reglasDeProduccion[i] = reglasDeProduccion[i + 1];
-				}
-				rows--;
+		ArrayList<String[]> newReglasDeProduccion = new ArrayList<>();
+		int newRulesCount = 1;
+		for (String[] reglas : reglasDeProduccion) {
+			String leftSide = reglas[0];
+			String rightSide = reglas[1];
+			while (rightSide.length() > 2) {
+				String newNonTerminal = leftSide + newRulesCount;
+				String[] newRule = {leftSide, rightSide.charAt(0) + newNonTerminal};
+				newReglasDeProduccion.add(newRule);
+				leftSide = newNonTerminal;
+				rightSide = rightSide.substring(1);
+				newRulesCount++;
 			}
+			newReglasDeProduccion.add(new String[]{leftSide, rightSide});
 		}
-		return reglasDeProduccion;
+		return newReglasDeProduccion.toArray(new String[0][0]);
 	}
 
 	public String readFile(String path){
