@@ -8,11 +8,11 @@ Main.main:
   la    a0 B_protObj
   jal   Object.copy
   jal   B_init
-  sw    a0 12(tp)
-  lw    a0 12(tp)
+  sw    a0 16(tp)
+  lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
-  lw    a0 12(tp)
+  lw    a0 16(tp)
   lw    t1 4(sp)
   addi  sp sp 4
   mv    t2 a0
@@ -36,7 +36,7 @@ label3:
   lw    t1 0(t1)
   jalr  t1
 label2:
-  lw    a0 12(tp)
+  lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
   la    a0 B_protObj
@@ -53,18 +53,18 @@ label4:
   lw    t1 12(a0)
   beqz  t1 label5
   mv    a0 s0
-  bne   a0 x0 label7
+  bne   a0 x0 label6
   la    a0 str_const0
   li    t1 1
   jal   _dispatch_abort
-label7:
+label6:
   lw    t1 8(a0)
   lw    t1 0(t1)
   jalr  t1
-  j     label6
+  j     label7
 label5:
   la    a0 int_const1
-label6:
+label7:
   la    a0 A_protObj
   jal   Object.copy
   jal   A_init
@@ -84,24 +84,24 @@ label8:
   lw    t1 12(a0)
   beqz  t1 label9
   mv    a0 s0
-  bne   a0 x0 label11
+  bne   a0 x0 label10
   la    a0 str_const0
   li    t1 1
   jal   _dispatch_abort
-label11:
+label10:
   lw    t1 8(a0)
   lw    t1 0(t1)
   jalr  t1
-  j     label10
+  j     label11
 label9:
   la    a0 int_const1
-label10:
-  lw    a0 12(tp)
+label11:
+  lw    a0 16(tp)
   sw    a0 16(tp)
   lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
-  lw    a0 12(tp)
+  lw    a0 16(tp)
   lw    t1 4(sp)
   addi  sp sp 4
   mv    t2 a0
@@ -129,25 +129,25 @@ label14:
   sw    a0 0(sp)
   addi  sp sp -4
   lw    a0 16(tp)
-  bne   a0 x0 label17
+  bne   a0 x0 label16
   la    a0 str_const0
   li    t1 1
   jal   _dispatch_abort
-label17:
+label16:
   lw    t1 8(a0)
   lw    t1 12(t1)
   jalr  t1
   sw    a0 0(sp)
   addi  sp sp -4
-  lw    a0 12(tp)
+  lw    a0 16(tp)
   lw    t1 4(sp)
   addi  sp sp 4
   mv    t2 a0
   la    a0 bool_const1
-  beq   t1 t2 label16
+  beq   t1 t2 label17
   la    a1 bool_const0
   jal   equality_test
-label16:
+label17:
   lw    t1 12(a0)
   beqz  t1 label18
   la    a0 int_const1
@@ -164,13 +164,13 @@ label20:
   jalr  t1
 label19:
   mv    a0 x0
-  sw    a0 12(tp)
-  mv    a0 x0
   sw    a0 16(tp)
-  lw    a0 12(tp)
+  mv    a0 x0
+  sw    a0 20(tp)
+  lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
-  lw    a0 16(tp)
+  lw    a0 20(tp)
   lw    t1 4(sp)
   addi  sp sp 4
   mv    t2 a0
@@ -198,4 +198,4 @@ label23:
   lw    s0 8(sp)
   lw    ra 4(sp)
   addi  sp sp 20
-  ret
+  ret   
