@@ -19,14 +19,14 @@ _string_tag:
   .globl  _MemMgr_TEST
 _MemMgr_TEST:
   .word   0
-str_const11:
+str_const14:
   .word   4
   .word   5
   .word   String_dispTab
   .word   int_const0
   .byte  0
   .align  2
-str_const10:
+str_const13:
   .word   4
   .word   6
   .word   String_dispTab
@@ -34,15 +34,31 @@ str_const10:
   .ascii  "Main"
   .byte  0
   .align  2
-str_const9:
+str_const12:
   .word   4
   .word   6
   .word   String_dispTab
   .word   int_const2
+  .ascii  "Derived"
+  .byte  0
+  .align  2
+str_const11:
+  .word   4
+  .word   6
+  .word   String_dispTab
+  .word   int_const1
+  .ascii  "Base"
+  .byte  0
+  .align  2
+str_const10:
+  .word   4
+  .word   6
+  .word   String_dispTab
+  .word   int_const3
   .ascii  "String"
   .byte  0
   .align  2
-str_const8:
+str_const9:
   .word   4
   .word   6
   .word   String_dispTab
@@ -50,100 +66,118 @@ str_const8:
   .ascii  "Bool"
   .byte  0
   .align  2
-str_const7:
-  .word   4
-  .word   5
-  .word   String_dispTab
-  .word   int_const3
-  .ascii  "Int"
-  .byte  0
-  .align  2
-str_const6:
+str_const8:
   .word   4
   .word   5
   .word   String_dispTab
   .word   int_const4
+  .ascii  "Int"
+  .byte  0
+  .align  2
+str_const7:
+  .word   4
+  .word   5
+  .word   String_dispTab
+  .word   int_const5
   .ascii  "IO"
+  .byte  0
+  .align  2
+str_const6:
+  .word   4
+  .word   6
+  .word   String_dispTab
+  .word   int_const3
+  .ascii  "Object"
   .byte  0
   .align  2
 str_const5:
   .word   4
-  .word   6
+  .word   7
   .word   String_dispTab
-  .word   int_const2
-  .ascii  "Object"
+  .word   int_const6
+  .ascii  "_prim_slot"
   .byte  0
   .align  2
 str_const4:
   .word   4
   .word   7
   .word   String_dispTab
-  .word   int_const5
-  .ascii  "_prim_slot"
+  .word   int_const7
+  .ascii  "SELF_TYPE"
   .byte  0
   .align  2
 str_const3:
   .word   4
   .word   7
   .word   String_dispTab
-  .word   int_const6
-  .ascii  "SELF_TYPE"
+  .word   int_const7
+  .ascii  "_no_class"
   .byte  0
   .align  2
 str_const2:
   .word   4
-  .word   7
+  .word   8
   .word   String_dispTab
-  .word   int_const6
-  .ascii  "_no_class"
+  .word   int_const8
+  .ascii  "<basic class>"
   .byte  0
   .align  2
 str_const1:
   .word   4
-  .word   8
+  .word   5
   .word   String_dispTab
-  .word   int_const7
-  .ascii  "<basic class>"
+  .word   int_const9
+  .ascii  "\n"
   .byte  0
   .align  2
 str_const0:
   .word   4
   .word   7
   .word   String_dispTab
-  .word   int_const5
+  .word   int_const6
   .ascii  "example.cl"
   .byte  0
   .align  2
-int_const7:
+int_const9:
+  .word   2
+  .word   4
+  .word   Int_dispTab
+  .word   1
+int_const8:
   .word   2
   .word   4
   .word   Int_dispTab
   .word   13
-int_const6:
+int_const7:
   .word   2
   .word   4
   .word   Int_dispTab
   .word   9
-int_const5:
+int_const6:
   .word   2
   .word   4
   .word   Int_dispTab
   .word   10
+int_const5:
+  .word   2
+  .word   4
+  .word   Int_dispTab
+  .word   2
 int_const4:
   .word   2
   .word   4
   .word   Int_dispTab
-  .word   2
+  .word   3
 int_const3:
   .word   2
   .word   4
   .word   Int_dispTab
-  .word   3
+  .word   6
 int_const2:
   .word   2
   .word   4
   .word   Int_dispTab
-  .word   6
+  .word   7
 int_const1:
   .word   2
   .word   4
@@ -165,17 +199,23 @@ bool_const1:
   .word   Bool_dispTab
   .word   1
 class_nameTab:
-  .word   str_const5
   .word   str_const6
   .word   str_const7
+  .word   str_const11
+  .word   str_const12
   .word   str_const8
   .word   str_const9
   .word   str_const10
+  .word   str_const13
 class_objTab:
   .word   Object_protObj
   .word   Object_init
   .word   IO_protObj
   .word   IO_init
+  .word   Base_protObj
+  .word   Base_init
+  .word   Derived_protObj
+  .word   Derived_init
   .word   Int_protObj
   .word   Int_init
   .word   Bool_protObj
@@ -196,6 +236,26 @@ IO_dispTab:
   .word   IO.out_int
   .word   IO.in_string
   .word   IO.in_int
+Base_dispTab:
+  .word   Object.abort
+  .word   Object.type_name
+  .word   Object.copy
+  .word   IO.out_string
+  .word   IO.out_int
+  .word   IO.in_string
+  .word   IO.in_int
+  .word   Base.identify
+  .word   Base.test
+Derived_dispTab:
+  .word   Object.abort
+  .word   Object.type_name
+  .word   Object.copy
+  .word   IO.out_string
+  .word   IO.out_int
+  .word   IO.in_string
+  .word   IO.in_int
+  .word   Base.identify
+  .word   Base.test
 Int_dispTab:
   .word   Object.abort
   .word   Object.type_name
@@ -224,24 +284,32 @@ IO_protObj:
   .word   1
   .word   3
   .word   IO_dispTab
-Int_protObj:
+Base_protObj:
   .word   2
+  .word   3
+  .word   Base_dispTab
+Derived_protObj:
+  .word   3
+  .word   3
+  .word   Derived_dispTab
+Int_protObj:
+  .word   4
   .word   4
   .word   Int_dispTab
   .word   0
 Bool_protObj:
-  .word   3
+  .word   5
   .word   4
   .word   Bool_dispTab
   .word   0
 String_protObj:
-  .word   4
+  .word   6
   .word   5
   .word   String_dispTab
   .word   int_const0
   .word   0
 Main_protObj:
-  .word   5
+  .word   7
   .word   3
   .word   Main_dispTab
   .globl  heap_start
@@ -274,6 +342,34 @@ IO_init:
   addi  tp sp 4
   mv    s0 a0
   jal   Object_init
+  mv    a0 s0
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 12
+  ret   
+Base_init:
+  addi  sp sp -12
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  jal   IO_init
+  mv    a0 s0
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 12
+  ret   
+Derived_init:
+  addi  sp sp -12
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  jal   Base_init
   mv    a0 s0
   lw    tp 12(sp)
   lw    s0 8(sp)
@@ -336,6 +432,136 @@ Main_init:
   lw    ra 4(sp)
   addi  sp sp 12
   ret   
+Base.identify:
+  addi  sp sp -12
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+
+  lw    a0 12(tp)
+  bne   a0 x0 label0
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label0:
+  lw    t1 8(a0)
+  lw    t1 4(t1)
+  jalr  t1
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label1
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label1:
+  lw    t1 8(a0)
+  lw    t1 12(t1)
+  jalr  t1
+  la    a0 str_const1
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label2
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label2:
+  lw    t1 8(a0)
+  lw    t1 12(t1)
+  jalr  t1
+
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 16
+  ret   
+Base.test:
+  addi  sp sp -16
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+
+  la    a0 Base_protObj
+  jal   Object.copy
+  jal   Base_init
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label3
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label3:
+  lw    t1 8(a0)
+  lw    t1 28(t1)
+  jalr  t1
+  la    a0 Derived_protObj
+  jal   Object.copy
+  jal   Derived_init
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label4
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label4:
+  lw    t1 8(a0)
+  lw    t1 28(t1)
+  jalr  t1
+  la    a0 Main_protObj
+  jal   Object.copy
+  jal   Main_init
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label5
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label5:
+  lw    t1 8(a0)
+  lw    t1 28(t1)
+  jalr  t1
+  la    a0 Derived_protObj
+  jal   Object.copy
+  jal   Derived_init
+  sw    a0 16(tp)
+  lw    a0 16(tp)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label6
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label6:
+  lw    t1 8(a0)
+  lw    t1 28(t1)
+  jalr  t1
+  lw    a0 -4(tp)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label7
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label7:
+  lw    t1 8(a0)
+  lw    t1 28(t1)
+  jalr  t1
+
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 16
+  ret   
 Main.main:
   addi  sp sp -12
   sw    tp 12(sp)
@@ -344,16 +570,17 @@ Main.main:
   addi  tp sp 4
   mv    s0 a0
 
-  mv    a0 s0
-  bne   a0 x0 label0
+  la    a0 Derived_protObj
+  jal   Object.copy
+  jal   Derived_init
+  bne   a0 x0 label8
   la    a0 str_const0
   li    t1 1
   jal   _dispatch_abort
-label0:
+label8:
   lw    t1 8(a0)
-  lw    t1 0(t1)
+  lw    t1 32(t1)
   jalr  t1
-  la    a0 int_const0
 
   lw    tp 12(sp)
   lw    s0 8(sp)
