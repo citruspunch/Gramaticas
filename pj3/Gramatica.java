@@ -425,7 +425,9 @@ A.foo:
   addi  tp sp 4
   mv    s0 a0
 
+  lw    a0 12(tp)
   sw    a0 12(s0)
+  lw    a0 -4(tp)
 
   lw    tp 12(sp)
   lw    s0 8(sp)
@@ -443,10 +445,11 @@ Main.main:
   la    a0 B_protObj
   jal   Object.copy
   jal   B_init
-  
   sw    a0 16(tp)
+  lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
+  lw    a0 16(tp)
   lw    t1 4(sp)
   addi  sp sp 4
   mv    t2 a0
@@ -470,6 +473,7 @@ label3:
   lw    t1 0(t1)
   jalr  t1
 label2:
+  lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
   la    a0 B_protObj
@@ -529,9 +533,12 @@ label10:
 label9:
   la    a0 int_const1
 label11:
+  lw    a0 16(tp)
   sw    a0 16(tp)
+  lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
+  lw    a0 16(tp)
   lw    t1 4(sp)
   addi  sp sp 4
   mv    t2 a0
@@ -558,6 +565,7 @@ label14:
   la    a0 int_const2
   sw    a0 0(sp)
   addi  sp sp -4
+  lw    a0 16(tp)
   bne   a0 x0 label16
   la    a0 str_const0
   li    t1 1
@@ -568,6 +576,7 @@ label16:
   jalr  t1
   sw    a0 0(sp)
   addi  sp sp -4
+  lw    a0 16(tp)
   lw    t1 4(sp)
   addi  sp sp 4
   mv    t2 a0
@@ -595,8 +604,10 @@ label19:
   sw    a0 16(tp)
   mv    a0 x0
   sw    a0 20(tp)
+  lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
+  lw    a0 20(tp)
   lw    t1 4(sp)
   addi  sp sp 4
   mv    t2 a0
