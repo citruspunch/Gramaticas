@@ -544,7 +544,7 @@ label6:
   lw    t1 8(a0)
   lw    t1 28(t1)
   jalr  t1
-  lw    a0 -4(tp)
+  mv    a0 s0
   sw    a0 0(sp)
   addi  sp sp -4
   mv    a0 s0
