@@ -23,14 +23,14 @@ str_const12:
   .word   5
   .word   5
   .word   String_dispTab
-  .word   int_const3
+  .word   int_const0
   .byte  0
   .align  2
 str_const11:
   .word   5
   .word   6
   .word   String_dispTab
-  .word   int_const4
+  .word   int_const7
   .ascii  "Main"
   .byte  0
   .align  2
@@ -46,7 +46,7 @@ str_const9:
   .word   5
   .word   6
   .word   String_dispTab
-  .word   int_const4
+  .word   int_const7
   .ascii  "Bool"
   .byte  0
   .align  2
@@ -54,7 +54,7 @@ str_const8:
   .word   5
   .word   5
   .word   String_dispTab
-  .word   int_const6
+  .word   int_const4
   .ascii  "Int"
   .byte  0
   .align  2
@@ -62,7 +62,7 @@ str_const7:
   .word   5
   .word   5
   .word   String_dispTab
-  .word   int_const7
+  .word   int_const2
   .ascii  "IO"
   .byte  0
   .align  2
@@ -78,7 +78,7 @@ str_const5:
   .word   5
   .word   7
   .word   String_dispTab
-  .word   int_const2
+  .word   int_const8
   .ascii  "_prim_slot"
   .byte  0
   .align  2
@@ -86,7 +86,7 @@ str_const4:
   .word   5
   .word   7
   .word   String_dispTab
-  .word   int_const8
+  .word   int_const9
   .ascii  "SELF_TYPE"
   .byte  0
   .align  2
@@ -94,7 +94,7 @@ str_const3:
   .word   5
   .word   7
   .word   String_dispTab
-  .word   int_const8
+  .word   int_const9
   .ascii  "_no_class"
   .byte  0
   .align  2
@@ -102,7 +102,7 @@ str_const2:
   .word   5
   .word   8
   .word   String_dispTab
-  .word   int_const9
+  .word   int_const10
   .ascii  "<basic class>"
   .byte  0
   .align  2
@@ -110,7 +110,7 @@ str_const1:
   .word   5
   .word   5
   .word   String_dispTab
-  .word   int_const0
+  .word   int_const1
   .ascii  "\n"
   .byte  0
   .align  2
@@ -118,30 +118,35 @@ str_const0:
   .word   5
   .word   7
   .word   String_dispTab
-  .word   int_const2
+  .word   int_const8
   .ascii  "example.cl"
   .byte  0
   .align  2
-int_const9:
+int_const10:
   .word   3
   .word   4
   .word   Int_dispTab
   .word   13
-int_const8:
+int_const9:
   .word   3
   .word   4
   .word   Int_dispTab
   .word   9
+int_const8:
+  .word   3
+  .word   4
+  .word   Int_dispTab
+  .word   10
 int_const7:
   .word   3
   .word   4
   .word   Int_dispTab
-  .word   2
+  .word   4
 int_const6:
   .word   3
   .word   4
   .word   Int_dispTab
-  .word   3
+  .word   8
 int_const5:
   .word   3
   .word   4
@@ -151,27 +156,27 @@ int_const4:
   .word   3
   .word   4
   .word   Int_dispTab
-  .word   4
+  .word   3
 int_const3:
   .word   3
   .word   4
   .word   Int_dispTab
-  .word   0
+  .word   7
 int_const2:
   .word   3
   .word   4
   .word   Int_dispTab
-  .word   10
+  .word   2
 int_const1:
   .word   3
   .word   4
   .word   Int_dispTab
-  .word   5
+  .word   1
 int_const0:
   .word   3
   .word   4
   .word   Int_dispTab
-  .word   1
+  .word   0
 bool_const0:
   .word   4
   .word   4
@@ -222,8 +227,7 @@ Main_dispTab:
   .word   IO.out_int
   .word   IO.in_string
   .word   IO.in_int
-  .word   Main.f
-  .word   Main.g
+  .word   Main.exp
   .word   Main.main
 Int_dispTab:
   .word   Object.abort
@@ -250,9 +254,8 @@ IO_protObj:
   .word   IO_dispTab
 Main_protObj:
   .word   2
-  .word   4
+  .word   3
   .word   Main_dispTab
-  .word   int_const3
 Int_protObj:
   .word   3
   .word   4
@@ -267,7 +270,7 @@ String_protObj:
   .word   5
   .word   5
   .word   String_dispTab
-  .word   int_const3
+  .word   int_const0
   .word   0
   .globl  heap_start
 heap_start:
@@ -361,168 +364,84 @@ String_init:
   lw    ra 4(sp)
   addi  sp sp 12
   ret   
-Main.f:
-  addi  sp sp -12
+Main.exp:
+  addi  sp sp -16
   sw    tp 12(sp)
   sw    s0 8(sp)
   sw    ra 4(sp)
   addi  tp sp 4
   mv    s0 a0
-  lw    a0 12(s0)
-  sw    a0 0(sp)
-  addi  sp sp -4
-  lw    a0 12(tp)
-  jal   Object.copy
-  lw    t2 12(a0)
-  lw    t1 4(sp)
-  addi  sp sp 4
-  lw    t1 12(t1)
-  add   t1 t1 t2
-  sw    t1 12(a0)
-  sw    a0 0(sp)
-  addi  sp sp -4
-  mv    a0 s0
-  bne   a0 x0 label0
-  la    a0 str_const0
-  li    t1 1
-  jal   _dispatch_abort
-label0:
-  lw    t1 8(a0)
-  lw    t1 16(t1)
-  jalr  t1
-  la    a0 str_const1
-  sw    a0 0(sp)
-  addi  sp sp -4
-  mv    a0 s0
-  bne   a0 x0 label1
-  la    a0 str_const0
-  li    t1 1
-  jal   _dispatch_abort
-label1:
-  lw    t1 8(a0)
-  lw    t1 12(t1)
-  jalr  t1
-  mv    a0 s0
-  lw    tp 12(sp)
-  lw    s0 8(sp)
-  lw    ra 4(sp)
-  addi  sp sp 16
-  ret   
-Main.g:
-  addi  sp sp -12
-  sw    tp 12(sp)
-  sw    s0 8(sp)
-  sw    ra 4(sp)
-  addi  tp sp 4
-  mv    s0 a0
-  lw    a0 12(s0)
+  lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
   la    a0 int_const0
-  jal   Object.copy
-  lw    t2 12(a0)
   lw    t1 4(sp)
   addi  sp sp 4
-  lw    t1 12(t1)
-  add   t1 t1 t2
-  sw    t1 12(a0)
-  sw    a0 12(s0)
-  lw    a0 12(tp)
+  mv    t2 a0
+  la    a0 bool_const1
+  beq   t1 t2 label0
+  la    a1 bool_const0
+  jal   equality_test
+label0:
+  lw    t1 12(a0)
+  beqz  t1 label1
+  la    a0 int_const1
+  j     label2
+label1:
+  lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
-  lw    a0 12(s0)
-  jal   Object.copy
-  lw    t2 12(a0)
-  lw    t1 4(sp)
-  addi  sp sp 4
-  lw    t1 12(t1)
-  add   t1 t1 t2
-  sw    t1 12(a0)
-  lw    tp 12(sp)
-  lw    s0 8(sp)
-  lw    ra 4(sp)
-  addi  sp sp 16
-  ret   
-Main.main:
-  addi  sp sp -12
-  sw    tp 12(sp)
-  sw    s0 8(sp)
-  sw    ra 4(sp)
-  addi  tp sp 4
-  mv    s0 a0
   la    a0 int_const2
   sw    a0 0(sp)
   addi  sp sp -4
-  mv    a0 s0
-  bne   a0 x0 label2
-  la    a0 str_const0
-  li    t1 1
-  jal   _dispatch_abort
-label2:
-  lw    t1 8(a0)
-  lw    t1 32(t1)
-  jalr  t1
+  lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
-  mv    a0 s0
-  bne   a0 x0 label3
-  la    a0 str_const0
-  li    t1 1
-  jal   _dispatch_abort
-label3:
-  lw    t1 8(a0)
-  lw    t1 32(t1)
-  jalr  t1
-  sw    a0 0(sp)
-  addi  sp sp -4
-  mv    a0 s0
-  bne   a0 x0 label4
-  la    a0 str_const0
-  li    t1 1
-  jal   _dispatch_abort
+  la    a0 int_const2
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  bne   t2 x0 label4
+  jal   _div_by_zero
 label4:
-  lw    t1 8(a0)
-  lw    t1 32(t1)
-  jalr  t1
+  div   t1 t1 t2
+  sw    t1 12(a0)
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  mul   t1 t1 t2
+  sw    t1 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  mv    t2 a0
+  la    a0 bool_const1
+  beq   t1 t2 label3
+  la    a1 bool_const0
+  jal   equality_test
+label3:
+  lw    t1 12(a0)
+  beqz  t1 label5
+  lw    a0 20(tp)
   sw    a0 0(sp)
   addi  sp sp -4
-  la    a0 int_const1
+  lw    a0 16(tp)
   sw    a0 0(sp)
   addi  sp sp -4
-  mv    a0 s0
-  bne   a0 x0 label5
-  la    a0 str_const0
-  li    t1 1
-  jal   _dispatch_abort
-label5:
-  lw    t1 8(a0)
-  lw    t1 32(t1)
-  jalr  t1
-  sw    a0 0(sp)
-  addi  sp sp -4
-  mv    a0 s0
-  bne   a0 x0 label6
-  la    a0 str_const0
-  li    t1 1
-  jal   _dispatch_abort
-label6:
-  lw    t1 8(a0)
-  lw    t1 32(t1)
-  jalr  t1
-  sw    a0 0(sp)
-  addi  sp sp -4
-  la    a0 int_const0
-  sw    a0 0(sp)
-  addi  sp sp -4
-  mv    a0 s0
-  bne   a0 x0 label7
-  la    a0 str_const0
-  li    t1 1
-  jal   _dispatch_abort
+  la    a0 int_const2
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  bne   t2 x0 label7
+  jal   _div_by_zero
 label7:
-  lw    t1 8(a0)
-  lw    t1 32(t1)
-  jalr  t1
+  div   t1 t1 t2
+  sw    t1 12(a0)
   sw    a0 0(sp)
   addi  sp sp -4
   mv    a0 s0
@@ -534,6 +453,40 @@ label8:
   lw    t1 8(a0)
   lw    t1 28(t1)
   jalr  t1
+  sw    a0 12(tp)
+  lw    a0 12(tp)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  lw    a0 12(tp)
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  mul   t1 t1 t2
+  sw    t1 12(a0)
+  j     label6
+label5:
+  lw    a0 20(tp)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  lw    a0 20(tp)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  lw    a0 16(tp)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  la    a0 int_const1
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  sub   t1 t1 t2
+  sw    t1 12(a0)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
   bne   a0 x0 label9
   la    a0 str_const0
   li    t1 1
@@ -542,6 +495,34 @@ label9:
   lw    t1 8(a0)
   lw    t1 28(t1)
   jalr  t1
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  mul   t1 t1 t2
+  sw    t1 12(a0)
+label6:
+label2:
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 24
+  ret   
+Main.main:
+  addi  sp sp -12
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  la    a0 int_const2
+  sw    a0 0(sp)
+  addi  sp sp -4
+  la    a0 int_const3
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
   bne   a0 x0 label10
   la    a0 str_const0
   li    t1 1
@@ -549,6 +530,105 @@ label9:
 label10:
   lw    t1 8(a0)
   lw    t1 28(t1)
+  jalr  t1
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label11
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label11:
+  lw    t1 8(a0)
+  lw    t1 16(t1)
+  jalr  t1
+  la    a0 str_const1
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label12
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label12:
+  lw    t1 8(a0)
+  lw    t1 12(t1)
+  jalr  t1
+  la    a0 int_const4
+  sw    a0 0(sp)
+  addi  sp sp -4
+  la    a0 int_const5
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label13
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label13:
+  lw    t1 8(a0)
+  lw    t1 28(t1)
+  jalr  t1
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label14
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label14:
+  lw    t1 8(a0)
+  lw    t1 16(t1)
+  jalr  t1
+  la    a0 str_const1
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label15
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label15:
+  lw    t1 8(a0)
+  lw    t1 12(t1)
+  jalr  t1
+  la    a0 int_const6
+  sw    a0 0(sp)
+  addi  sp sp -4
+  la    a0 int_const4
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label16
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label16:
+  lw    t1 8(a0)
+  lw    t1 28(t1)
+  jalr  t1
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label17
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label17:
+  lw    t1 8(a0)
+  lw    t1 16(t1)
+  jalr  t1
+  la    a0 str_const1
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label18
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label18:
+  lw    t1 8(a0)
+  lw    t1 12(t1)
   jalr  t1
   lw    tp 12(sp)
   lw    s0 8(sp)
