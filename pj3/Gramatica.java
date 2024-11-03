@@ -380,42 +380,28 @@ Main.main:
   addi  tp sp 4
   mv    s0 a0
   la    a0 str_const2
-  bne   a0 x0 label1
-  la    a0 str_const0
-  li    t1 1
-  jal   _case_abort2
-label1:
-  lw    t2 0(a0)
-  li    t3 5
-  blt   t2 t3 label2
-  li    t3 5
-  bgt   t2 t3 label2
   sw    a0 12(tp)
   lw    a0 12(tp)
   sw    a0 0(sp)
   addi  sp sp -4
   mv    a0 s0
-  bne   a0 x0 label3
+  bne   a0 x0 label0
   la    a0 str_const0
   li    t1 1
   jal   _dispatch_abort
-label3:
+label0:
   lw    t1 8(a0)
   lw    t1 12(t1)
   jalr  t1
-  j     label0
-label2:
-  jal   _case_abort
-label0:
   la    a0 str_const3
   sw    a0 0(sp)
   addi  sp sp -4
   mv    a0 s0
-  bne   a0 x0 label4
+  bne   a0 x0 label1
   la    a0 str_const0
   li    t1 1
   jal   _dispatch_abort
-label4:
+label1:
   lw    t1 8(a0)
   lw    t1 12(t1)
   jalr  t1
