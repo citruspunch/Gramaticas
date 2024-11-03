@@ -660,3 +660,278 @@ label20:
   addi  sp sp -4
   lw    a0 16(s0)
   bne   a0 x0 label21
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label21:
+  lw    t1 8(a0)
+  lw    t1 32(t1)
+  jalr  t1
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  add   t1 t1 t2
+  sw    t1 12(a0)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  lw    a0 32(s0)
+  bne   a0 x0 label22
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label22:
+  lw    t1 8(a0)
+  lw    t1 32(t1)
+  jalr  t1
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  add   t1 t1 t2
+  sw    t1 12(a0)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label23
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label23:
+  lw    t1 8(a0)
+  lw    t1 32(t1)
+  jalr  t1
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  add   t1 t1 t2
+  sw    t1 12(a0)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label24
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label24:
+  lw    t1 8(a0)
+  lw    t1 28(t1)
+  jalr  t1
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  add   t1 t1 t2
+  sw    t1 12(a0)
+  sw    a0 36(s0)
+  mv    a0 s0
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 16
+  ret   
+Bar_init:
+  addi  sp sp -12
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  jal   Razz_init
+  mv    a0 s0
+  bne   a0 x0 label25
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label25:
+  lw    t1 8(a0)
+  lw    t1 32(t1)
+  jalr  t1
+  sw    a0 40(s0)
+  mv    a0 s0
+  bne   a0 x0 label26
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label26:
+  lw    t1 8(a0)
+  lw    t1 28(t1)
+  jalr  t1
+  sw    a0 44(s0)
+  mv    a0 s0
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 12
+  ret   
+Int_init:
+  addi  sp sp -12
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  jal   Object_init
+  mv    a0 s0
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 12
+  ret   
+Bool_init:
+  addi  sp sp -12
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  jal   Object_init
+  mv    a0 s0
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 12
+  ret   
+String_init:
+  addi  sp sp -12
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  jal   Object_init
+  mv    a0 s0
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 12
+  ret   
+Main_init:
+  addi  sp sp -12
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  jal   Object_init
+  la    a0 Bazz_protObj
+  jal   Object.copy
+  jal   Bazz_init
+  sw    a0 12(s0)
+  la    a0 Foo_protObj
+  jal   Object.copy
+  jal   Foo_init
+  sw    a0 16(s0)
+  la    a0 Razz_protObj
+  jal   Object.copy
+  jal   Razz_init
+  sw    a0 20(s0)
+  la    a0 Bar_protObj
+  jal   Object.copy
+  jal   Bar_init
+  sw    a0 24(s0)
+  mv    a0 s0
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 12
+  ret   
+Bazz.printh:
+  addi  sp sp -12
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  lw    a0 12(s0)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  mv    a0 s0
+  bne   a0 x0 label27
+  la    a0 str_const0
+  li    t1 1
+  jal   _dispatch_abort
+label27:
+  lw    t1 8(a0)
+  lw    t1 16(t1)
+  jalr  t1
+  la    a0 int_const2
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 12
+  ret   
+Bazz.doh:
+  addi  sp sp -16
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  lw    a0 12(s0)
+  sw    a0 12(tp)
+  lw    a0 12(s0)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  la    a0 int_const1
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  add   t1 t1 t2
+  sw    t1 12(a0)
+  sw    a0 12(s0)
+  lw    a0 12(tp)
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 16
+  ret   
+Foo.doh:
+  addi  sp sp -16
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  lw    a0 12(s0)
+  sw    a0 12(tp)
+  lw    a0 12(s0)
+  sw    a0 0(sp)
+  addi  sp sp -4
+  la    a0 int_const0
+  jal   Object.copy
+  lw    t2 12(a0)
+  lw    t1 4(sp)
+  addi  sp sp 4
+  lw    t1 12(t1)
+  add   t1 t1 t2
+  sw    t1 12(a0)
+  sw    a0 12(s0)
+  lw    a0 12(tp)
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 16
+  ret   
+Main.main:
+  addi  sp sp -12
+  sw    tp 12(sp)
+  sw    s0 8(sp)
+  sw    ra 4(sp)
+  addi  tp sp 4
+  mv    s0 a0
+  la    a0 str_const1
+  lw    tp 12(sp)
+  lw    s0 8(sp)
+  lw    ra 4(sp)
+  addi  sp sp 12
+  ret   
+
+# end of generated code
